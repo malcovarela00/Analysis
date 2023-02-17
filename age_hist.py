@@ -6,7 +6,6 @@ import datetime
 def age(df):
     
     df['fecha_nac'] = pd.to_datetime(df['date_birth'], errors = 'coerce')
-    df['fecha_nac'] = pd.to_datetime(df['fecha_nac'])
     df['Año'] = df['fecha_nac'].dt.year
     now = datetime.datetime.now()
     df['Edad'] = (now - df['Año'])
