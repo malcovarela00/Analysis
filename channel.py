@@ -10,6 +10,6 @@ def channel(df, date_start, date_end):
     print(result)
     result.plot(kind='pie', subplots=True, figsize=(25, 15))
     plt.title('Lead por canal' + ' del ' + str(date_start) + ' a ' + str(date_end))
-    plt.savefig('./gv/graficos/channel_lead.png')
+    plt.savefig('./graficos/channel_lead.png')
     plt.show()
     result.to_csv('./tables/channel.csv')
