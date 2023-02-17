@@ -6,25 +6,15 @@ def conversion(df, date_start, date_end):
     df['date_end'] = pd.to_datetime(df['date_end'])
     mask = (df['date_end'] >= date_start) & (df['date_end'] <= date_end)
     df = df.loc[mask]
+    
     df = df.loc[df['is_upselling'] == 0]                                    # Los que no son upselling
-    df = df.drop(df[df['destination']== '(not set)'].index)                 #elimina destination -> (not set)
-    df = df.drop(df[df['agent'] == 'admingv'].index)                         #elimina el agent -> admingv
-    df = df.drop(df[df['agent'] == 'arvin@grandvoyage.com'].index)           #elimina el agent -> arvin
-    df = df.drop(df[df['agent'] == 'tech@grandvoyage.com'].index)            #elimina el agent -> tech
-    df = df.drop(df[df['agent'] == 'sara@grandvoyage.com'].index)                         #elimina el agent -> admingv
-    df = df.drop(df[df['agent'] == 'dircom@grandvoyage.com'].index)                         #elimina el agent -> admingv
-    df = df.drop(df[df['agent'] == 'jea@grandvoyage.com'].index)                   #elimina el agent -> admingv
-    df = df.drop(df[df['agent'] == 'alessandra@grandvoyage.com'].index)                   #elimina el agent -> admingv
-    df = df.drop(df[df['agent'] == 'False'].index)                         #elimina el agent -> admingv
-
     destination_list = df['destination'].unique().tolist()                  #todos los elementos de 'destination'
     destination_list.sort()                                                 #ordenados alfabeticamente
-    df['agent'] = df['agent'].str.replace('@grandvoyage.com', '', regex=True)           #Elimina @grandvoyage de la columna agente
     df['agent'] = df['agent'].str.capitalize()                              #Pone en mayúscula la primera letra
     agent_list = df['agent'].unique().tolist()                              #todos los elementos de 'agent'
     agent_list.sort()                                                       #ordenados alfabeticamente
-    won = df.loc[df['status'] == 'won']                                     #estados won en 2022
-    lost = df.loc[df['status'] == 'lost']                                   #estados lost en 2022
+    won = df.loc[df['status'] == 'won']                                     #estados won
+    lost = df.loc[df['status'] == 'lost']                                   #estados lost
 
     min_lead = 10
 
@@ -60,20 +50,12 @@ def conversion(df, date_start, date_end):
         plt.legend(loc='upper right')
         for x, y in zip(destination_list, promedio):
             label = "{:.1f}".format(y)
-            plt.annotate(label, # this is the text
-                        (x,y), # this is the point to label
-                        textcoords="offset points", # how to position the text
-                        xytext=(0,10), # distance from text to points (x,y)
-                        ha='center') # horizontal alignment can be left, right or center
+            plt.annotate(label,
+                        (x,y),
+                        textcoords="offset points",
+                        xytext=(0,10),
+                        ha='center') 
         archivo = f'conversion_{i}.png'
-        plt.savefig('gv/graficos/'+ archivo)
+        plt.savefig('./graficos/'+ archivo)
         plt.close()
     
-    
-    
-
-df = pd.read_csv('./gv/data/bi_deal(2021a).csv')
-date_start = '2022-01-01'
-date_end = '2023-01-31'
-
-conversion(df, date_start, date_end)
