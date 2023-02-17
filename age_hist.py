@@ -1,16 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import datetime
 
 def age(df):
     
     df['fecha_nac'] = pd.to_datetime(df['date_birth'], errors = 'coerce')
     df['fecha_nac'] = pd.to_datetime(df['fecha_nac'])
     df['Año'] = df['fecha_nac'].dt.year
-    ahora = 2022
-    df['Edad'] = (ahora - df['Año'])
+    now = datetime.datetime.now()
+    df['Edad'] = (now - df['Año'])
     df = df.drop(df[df['Edad']<1].index)
-    df = df.drop(df[df['Edad']>95].index)
+    df = df.drop(df[df['Edad']>100].index)
     df = df.dropna(subset='Edad')
 
     df.to_csv('./data/travel_traveller_age.csv')
