@@ -7,6 +7,7 @@ def TopDestination(df, date_start, date_end):
     df['date_end'] = pd.to_datetime(df['date_end'])
     mask = (df['date_end'] >= date_start) & (df['date_end'] <= date_end)
     df = df.loc[mask]
+    
     won = df.loc[df['status'] == 'won']
     won['Month'] = won['date_end'].dt.month
     won['Year'] = won['date_end'].dt.year
@@ -25,7 +26,7 @@ def TopDestination(df, date_start, date_end):
     plt.title('Top ' + str(max_destination) + ' Destinos' + ' del ' + str(date_start) + ' a ' + str(date_end))
     plt.xlabel('Destinos')
     plt.ylabel('Value [M]')
-    plt.savefig('gv/graficos/top_destination.png')
+    plt.savefig('./graficos/top_destination.png')
     plt.show()
     plt.close()
     
@@ -42,15 +43,5 @@ def TopDestination(df, date_start, date_end):
         plt.xlabel('Mes')
         plt.ylabel('Value')
     plt.tight_layout()
-    plt.savefig('gv/graficos/top_destination_year.png')
+    plt.savefig('./graficos/top_destination_year.png')
     plt.show()
-
-
-df = pd.read_csv('./gv/data/bi_deal(2021a).csv')
-
-## La fecha límite de inicio es 2019-01-01
-
-date_start = '2022-01-01'
-date_end = '2023-01-31'
-
-TopDestination(df, date_start, date_end)
