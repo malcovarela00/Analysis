@@ -12,11 +12,4 @@ def channel(df, date_start, date_end):
     plt.title('Lead por canal' + ' del ' + str(date_start) + ' a ' + str(date_end))
     plt.savefig('./gv/graficos/channel_lead.png')
     plt.show()
-    result.to_csv('gv/tables/channel.csv')
-
-
-df = pd.read_csv('./gv/data/bi_deal(2021a).csv')
-date_start = '2022-01-01'
-date_end = '2023-01-31'
-
-channel(df, date_start, date_end)
+    result.to_csv('./tables/channel.csv')
